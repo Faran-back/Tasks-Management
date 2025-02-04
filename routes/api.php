@@ -12,4 +12,4 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
 });
 
-Route::view('/tasks/index', 'index');
+

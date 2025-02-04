@@ -22,6 +22,7 @@ class TaskController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'Task Created Successfully',
+            'task' => $task
         ]);
     }
 
@@ -42,6 +43,7 @@ class TaskController extends Controller
         return response()->json([
             'status' => 200,
             'message' => 'Task Updated Successfully',
+            'task' => $task
         ]);
     }
 
