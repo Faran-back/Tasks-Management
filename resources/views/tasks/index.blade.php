@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tasks Management</title>
+<x-app-layout>
+    <div class="max-w-xl mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+        <form action="{{ route('store') }}" method="POST">
+            @csrf
+            <div class="mb-6">
+                <x-input-label for="title" :value="__('Title')" />
+                <x-text-input id="title" name="title" type="text" class="block w-full mt-1 p-3 border rounded-lg shadow-sm" required />
+            </div>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-    <h1 class="text-4xl font-bold text-red-500">Tailwind is Working!</h1>
-</body>
-</html>
+            <div class="mb-6">
+                <x-input-label for="description" :value="__('Description')" />
+                <x-text-input id="description" name="description" type="text" class="block w-full mt-1 p-3 border rounded-lg shadow-sm" required />
+            </div>
+
+            <div class="mt-6">
+                <x-primary-button type="submit" class="py-3 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700">
+                    {{ __('Submit') }}
+                </x-primary-button>
+            </div>
+        </form>
+    </div>
+</x-app-layout>

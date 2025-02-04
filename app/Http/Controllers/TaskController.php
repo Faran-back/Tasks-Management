@@ -12,18 +12,20 @@ class TaskController extends Controller
     }
 
     public function store(Request $request){
+
+        $user = auth('sanctum')->user();
+
+        $userId = $user->id;
+
         $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'user_id' => $userId
         ]);
 
         $task = Task::create($data);
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Task Created Successfully',
-            'task' => $task
-        ]);
+        return redirect('tasks.show')->with('success' , 'Task Created Successfully!');
     }
 
 
@@ -55,4 +57,5 @@ class TaskController extends Controller
             'message' => 'Task Deleted Successfully',
         ]);
     }
+
 }
