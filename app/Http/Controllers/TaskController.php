@@ -25,7 +25,11 @@ class TaskController extends Controller
 
         $task = Task::create($data);
 
-        return redirect('tasks.show')->with('success' , 'Task Created Successfully!');
+        return response()->json([
+            'status' => 200,
+            'message' => 'Task created successfully',
+            'task' => $task
+        ]);
     }
 
 
