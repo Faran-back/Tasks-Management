@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="max-w-xl mx-auto mt-8 p-6 bg-white shadow-md rounded-lg">
+    <div class="max-w-sm mx-auto mt-4 p-6 bg-white shadow-xl rounded-lg border border-gray-200 w-96">
         <form id="task-form">
             @csrf
             <div class="mb-6">
@@ -14,7 +14,7 @@
 
             <div class="mt-6">
                 <x-primary-button type="submit" class="py-3 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700">
-                    {{ __('Submit') }}
+                    {{ __('Create') }}
                 </x-primary-button>
             </div>
         </form>
@@ -22,19 +22,18 @@
         <div id="success-message" class="text-green-600 mt-4 hidden">Task created successfully!</div>
     </div>
 
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#task-form').on('submit', function(event) {
                 event.preventDefault();
 
-                const token = $('meta[name="csrf-token"]').attr('content');
-
                 $.ajax({
-                    url: "{{ route('store') }}", // API endpoint
+                    url: "{{ url('/api/create') }}", // API endpoint
                     method: "POST",
                     headers: {
-                        'Authorization': 'Bearer ' + token, // Sanctum token
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                         'Accept': 'application/json'
                     },
                     data: {

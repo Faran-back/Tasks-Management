@@ -12,15 +12,9 @@ class TaskController extends Controller
     }
 
     public function store(Request $request){
-
-        $user = auth('sanctum')->user();
-
-        $userId = $user->id;
-
         $data = $request->validate([
             'title' => 'required',
-            'description' => 'required',
-            'user_id' => $userId
+            'description' => 'required'
         ]);
 
         $task = Task::create($data);
@@ -34,11 +28,6 @@ class TaskController extends Controller
 
 
     public function update(Request $request, $id){
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'status' => 'required',
-        ]);
 
         $task = Task::where('id', $id)->update([
             'title' => $request->title,
