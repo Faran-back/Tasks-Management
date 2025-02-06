@@ -16,36 +16,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //  Task::factory(1)->create();
+         User::factory(5)->create();
 
-        $admin = Role::create([
-            'name' => 'admin',
-            'display_name' => 'Admin'
-        ]);
+  {
 
-        $manager = Role::create([
-            'name' => 'manager',
-            'display_name' => 'Manager'
-        ]);
+        // // Create Roles
+        // $admin = Role::create(['name' => 'admin', 'display_name' => 'Administrator']);
+        // $manager = Role::create(['name' => 'manager', 'display_name' => 'Manager']);
+        // $user = Role::create(['name' => 'user', 'display_name' => 'User']);
 
-        $user = Role::create([
-            'name' => 'user',
-            'display_name' => 'User'
-        ]);
+        // // Create Permissions
+        // $allActionsOnTasks = Permission::create(['name' => 'all-actions', 'display_name' => 'All Actions']);
+        // $editTasks = Permission::create(['name' => 'edit-tasks', 'display_name' => 'Edit Tasks']);
+        // $viewTasks = Permission::create(['name' => 'view-tasks', 'display_name' => 'View Tasks']);
 
-        $allActionOnTasks = Permission::create([
-            'name' => 'all actions',
-            'display_name' => 'All Actions'
-        ]);
+        // // Assign Permissions to Roles
+        // $admin->givePermission([$allActionsOnTasks]); // Admin has all permissions
+        // $manager->givePermission([$editTasks]); // Manager can view and edit
+        // $user->givePermission([$viewTasks]); // User can only view
 
-        $onlyEditTasks = Permission::create([
-            'name' => 'edit tasks',
-            'display_name' => 'Edit Tasks'
-        ]);
+        // // Assign Roles to Users (example users)
+        // $adminUser = User::find(1); // Replace with actual user ID
+        // $managerUser = User::find(2);
+        // $normalUser = User::find(3);
 
-        $viewTasks = Permission::create([
-            'name' => 'view tasks',
-            'display_name' => 'View Tasks'
-        ]);
+        // $adminUser?->assignRole('admin');
+        // $managerUser?->assignRole('manager');
+        // $normalUser?->assignRole('user');
     }
 }
+
+    }
+
