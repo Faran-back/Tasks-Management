@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\GeneralController;
+use App\Models\Task;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TasksAuth\AuthController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,10 +31,11 @@ Route::delete('/delete/{id}', [TaskController::class, 'destroy']);
 Route::get('index', [GeneralController::class, 'index'])->name('index');
 Route::get('all-tasks', [GeneralController::class, 'all_tasks'])->name('show.tasks');
 Route::get('edit-task/{id}', [GeneralController::class, 'edit_tasks']);
+Route::get('delete-task/{id}', [GeneralController::class, 'delete_task']);
 
 Route::get('/admin/dashboard', function(){
     return view('dashboards.admin-dashboard');
-})->name('admin_dashboard');
+})->name('admin.dashboard');
 
 Route::get('/manager/dashboard', function(){
     return view('dashboards.manager-dashboard');
@@ -41,5 +44,12 @@ Route::get('/manager/dashboard', function(){
 Route::get('/dashboard', function(){
     return view('dashboards.user-dashboard');
 })->name('dashboard');
+
+Route::get('view-task/{id}', function(){
+    $tasks =  Task::with('user')->get();
+    $users = User::all();
+    return view('tasks.view-tasks', compact(['tasks', 'users']));
+});
+
 
 require __DIR__.'/auth.php';

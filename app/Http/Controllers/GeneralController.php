@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GeneralController extends Controller
 {
@@ -18,9 +19,15 @@ class GeneralController extends Controller
         return view('tasks.show', compact(['tasks', 'users']));
     }
 
-    public function edit_tasks(){
-        $users = User::all();
-        $tasks = Task::all();
-        return view('tasks.edit', compact(['tasks', 'users']));
+    public function edit_tasks($id){
+        $user = Auth::user();
+        $task = Task::find($id);
+        return view('tasks.edit', compact(['task', 'user']));
+    }
+
+    public function delete_task($id){
+        $task = Task::find($id);
+        $task->delete();
+        return redirect('all-tasks')->with('success', 'Task deleted successfully');
     }
 }

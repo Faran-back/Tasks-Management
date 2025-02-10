@@ -1,5 +1,5 @@
 <x-app-layout>
     @foreach ($tasks as $task)
-     <x-task-card :task='$task'></x-task-card>
+        <x-view-tasks :task="$task"></x-view-tasks>
     @endforeach
 </x-app-layout>

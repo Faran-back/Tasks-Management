@@ -1,8 +1,8 @@
-@props([ 'task'])
+@props(['task'])
 
 <div class="max-w-sm mx-auto mt-4 p-4 bg-white shadow-lg rounded-lg">
     <div class="px-2 sm:px-0">
-        <h3 class="text-sm font-semibold text-gray-900">{{ $task->user->name }}</h3>
+        <h3 class="text-sm font-semibold text-gray-900">Task by: {{ $task->user->name }}</h3>
         <p class="mt-1 text-xs text-gray-500">
             Role: {{ $task->user->roles->pluck('name')->first() }}
         </p>
@@ -20,8 +20,23 @@
                 <dd class="mt-1 text-xs text-gray-700 sm:col-span-2 sm:mt-0">{{ $task->description }}</dd>
             </div>
         </dl>
-        <a href="{{ url('view-task/'.$task->id) }}">
-            <x-primary-button>View</x-primary-button>
-        </a>
+
+        <!-- Check if user is admin or manager for edit -->
+        @if(auth()->user()->hasRole(['admin', 'manager']))
+            <div class="flex space-x-4 mt-4">
+                <a href="{{ url('edit-task/'.$task->id) }}">
+                    <x-secondary-button>Edit</x-secondary-button>
+                </a>
+            </div>
+        @endif
+
+        <!-- Only admin can delete -->
+        @if(auth()->user()->hasRole('admin'))
+        <div class="flex space-x-4 mt-4">
+            <a href="{{ url('delete-task/'.$task->id) }}">
+                <x-danger-button>Delete</x-danger-button>
+            </a>
+        </div>
+        @endif
     </div>
 </div>

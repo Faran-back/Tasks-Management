@@ -21,15 +21,62 @@
                     </x-primary-button>
                 </div>
             </form>
-
-            <div id="success-message" class="text-green-600 mt-4 hidden">
-                Task created successfully!
-            </div>
         </div>
     </div>
 
+    <!-- Toast Notification -->
+    <div id="filament-toast" class="fixed top-5 right-5 z-50 hidden bg-green-700 text-white text-sm p-4 rounded-lg shadow-lg transition-opacity duration-500 opacity-0">
+        <span id="toast-message">Task created successfully!</span>
+    </div>
+
+    <!-- Inline Styles -->
+    <style>
+        #filament-toast {
+            transition: opacity 0.5s ease-out;
+            opacity: 0;
+        }
+
+        #filament-toast.show {
+            opacity: 1;
+        }
+
+        /* Position the toast in the top-right corner */
+        #filament-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background-color: #48bb78; /* Green color */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function showFilamentToast(message) {
+            const toast = document.getElementById('filament-toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            // Set the toast message
+            toastMessage.textContent = message;
+
+            // Show the toast
+            toast.classList.remove('hidden');
+            toast.classList.add('show');
+
+            // Hide the toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 500); // Toast disappears after fade-out
+            }, 3000); // Duration the toast stays on screen
+        }
+
         $(document).ready(function() {
             $('#task-form').on('submit', function(event) {
                 event.preventDefault();
@@ -46,9 +93,8 @@
                         description: $('#description').val(),
                     },
                     success: function(response) {
-                        $('#success-message').removeClass('hidden');
+                        showFilamentToast("Task created successfully!");
                         $('#task-form')[0].reset(); // Reset form fields
-                        console.log(response); // Log the response for debugging
                     },
                     error: function(xhr) {
                         if (xhr.status === 422) { // Validation error
