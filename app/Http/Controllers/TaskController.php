@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Notifications\TaskUpdated;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Notification;
 
 class TaskController extends Controller
 {
@@ -64,6 +66,15 @@ class TaskController extends Controller
             'message' => 'Task Updated Successfully',
             'task' => $task
         ]);
+
+        $response = Http::post(route('task.update', ['id' => $id]), [
+            'task_id' => $id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'status' => $request->status,
+        ]);
+
+        $notification = Notification::send($task->user, new TaskUpdated($task));
     }
 
     public function delete($id){
